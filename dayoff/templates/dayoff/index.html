@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+{% load static %}
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>รายการคำขอลางาน</title>
+</head>
+<link rel="stylesheet" href="{% static 'css/bootstrap.min.css' %}">
+<style>
+    .status{
+        width: 100px;
+    }
+</style>
+<body>
+<button>
+    <a href="{% url 'logout' %}">LOGOUT</a>
+</button>
+<h1>รายการคำขอลางานของฉัน</h1>
+{{ formset.management_form }}
+<table>
+    <tr>
+        <td style="width: 90px;">ประเภท</td>
+        <td style="width: 250px;">สาเหตุ</td>
+        <td style="width: 120px;">ตั้งแต่วันที่</td>
+        <td style="width: 120px;">ถึงวันที่</td>
+        <td style="width: 120px;">สถานะ</td>
+    </tr>
+    {% for form in formset %}
+        <tr>
+            <td>{{ form.type.value }}</td>
+            <td>{{ form.reason.value }}</td>
+            <td>{{ form.date_start.value }}</td>
+            <td>{{ form.date_end.value }}</td>
+            {% if form.approve_status.value == "อนุมัติ" %}
+                <td><button type="button" class="btn btn-success status">{{ form.approve_status.value }}</button></td>
+                {% elif form.approve_status.value == "รอการอนุมัติ" %}
+                <td><button type="button" class="btn btn-secondary status">{{ form.approve_status.value }}</button></td>
+                {% elif form.approve_status.value == "ไม่อนุมัติ" %}
+                <td><button type="button" class="btn btn-danger status">{{ form.approve_status.value }}</button></td>
+            {% endif %}
+{#            <td>{{ form.approve_status.value }}</td>#}
+        </tr>
+    {% endfor %}
+</table>
+<button type="button" class="btn btn-primary"><a style="color: white;" href="{% url 'request-form' %}">ยื่นคำขอลางาน</a></button>
+</body>
+</html>

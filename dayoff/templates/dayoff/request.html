@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+{% load static %}
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>คำขอลางาน</title>
+</head>
+<style>
+    .errorlist{
+        color: red;
+    }
+</style>
+<link rel="stylesheet" href="{% static 'css/bootstrap.min.css' %}">
+<body>
+<button>
+    <a href="{% url 'logout' %}">LOGOUT</a>
+</button>
+<h1>แบบฟอร์มขอลางาน</h1>
+<form action="{% url 'request-form' %}" method="POST">
+    {% csrf_token %}
+    {% if form.non_field_errors %}
+        <p>
+            {{ form.non_field_errors }}
+        </p>
+    {% endif %}
+
+    <p>
+        <label id="{{ form.reason.id_for_label }}">เนื่องจาก</label><br>
+        {{ form.reason.errors }}{{ form.reason }}
+    </p>
+    <p>
+        <label id="{{ form.type.id_for_label }}">ประเภท</label><br>
+        {{ form.type.errors }}{{ form.type }}
+    </p>
+    <p>
+        <label id="{{ form.date_start.id_for_label }}">ตั้งแต่วันที่</label><br>
+        {{ form.date_start.errors }}{{ form.date_start }}
+    </p>
+    <p>
+        <label id="{{ form.date_end.id_for_label }}">ถึงวันที่</label><br>
+        {{ form.date_end.errors }}{{ form.date_end }}
+    </p>
+    <p><input type="submit" value="ส่ง"></p>
+</form>
+</body>
+</html>
