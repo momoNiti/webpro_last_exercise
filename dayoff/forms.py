@@ -25,6 +25,6 @@ class RequestModelForm(forms.ModelForm):
         cleaned_data = super().clean()
         start = cleaned_data.get('date_start')
         end = cleaned_data.get('date_end')
-        if end < start:
+        if str(end) < str(start):
             self.add_error('date_start', 'วันไม่ถูกต้อง')
             self.add_error('date_end', 'วันไม่ถูกต้อง')
